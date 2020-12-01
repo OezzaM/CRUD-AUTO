@@ -4,7 +4,7 @@ const router = Router();
 
 // Routes
 router.get('/', (req, res) => {
-    res.send('Hola mundo');
+    res.send('Para ver el API de autos localhost:5000/conductores');
 });
 
 

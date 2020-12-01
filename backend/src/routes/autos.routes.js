@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const db = await connect();
     const auto = {
+        key: req.body.patente,
         color: req.body.color,
         puertas: req.body.puertas,
         observaciones: req.body.observaciones,
@@ -39,6 +40,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const actualizarAuto = {
+        key: req.body.patente,
         color: req.body.color,
         puertas: req.body.puertas,
         observaciones: req.body.observaciones,

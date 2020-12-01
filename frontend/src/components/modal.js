@@ -1,18 +1,20 @@
-import React,{useEffect, useState} from 'react';
+import React,{ useEffect } from 'react';
 import 'antd/dist/antd.css';
-import { Button, Modal, Form, Input, Upload, message, InputNumber, Select } from 'antd';
+import { Modal, Form, Input, InputNumber, Select, notification } from 'antd';
 
 const Modals = ({ visible, setVisible, auto, setActualizar}) => {
     
   const {_id, marca, modelo, observaciones, patente, color, puertas} = auto;
  
-  /* const onCreate = () => {
-    setVisible(false);
-  }; */
   const onCancel = () => {
     setVisible(false);
   };
 
+  const openNotificationWithIcon = (type, message) => {
+    notification[type]({
+      message
+    });
+  };
 
     const [form] = Form.useForm();
 
@@ -27,7 +29,7 @@ const Modals = ({ visible, setVisible, auto, setActualizar}) => {
         puertas
       });
 
-    }, [auto])
+    }, [auto,color, form, marca, observaciones, patente, puertas, modelo])
     const validateMessages = {
         required: '${label} es requerido',
         types: {
@@ -39,7 +41,7 @@ const Modals = ({ visible, setVisible, auto, setActualizar}) => {
         },
       };
     return ( 
-        <Modal
+      <Modal
       visible={visible}
       title="Agregar un nuevo auto"
       okText="Agregar"
@@ -50,8 +52,6 @@ const Modals = ({ visible, setVisible, auto, setActualizar}) => {
         .validateFields()
         .then((values) => { 
             setVisible(false)
-            console.log('elemento creado: ')
-            
             if(_id){
             const url = `http://localhost:5000/conductores/${_id}`;
             const data = {...values};
@@ -62,8 +62,9 @@ const Modals = ({ visible, setVisible, auto, setActualizar}) => {
                 'Content-Type': 'application/json'
               }
             }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            /* .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response)); */
+            openNotificationWithIcon('success', 'Auto actualizado correctamente')
             }else{
               const url = `http://localhost:5000/conductores/`;
               const data = {...values};
@@ -74,10 +75,11 @@ const Modals = ({ visible, setVisible, auto, setActualizar}) => {
                 'Content-Type': 'application/json'
               }
             }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            /* .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response)); */
+            openNotificationWithIcon('success', 'Auto creado correctamente')
             }
-            setActualizar(true)
+            setActualizar(true);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);

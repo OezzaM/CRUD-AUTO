@@ -67,16 +67,14 @@ function App() {
           <Header className="header" style={{padding:'0px 15px', color:'white', fontSize:20}}>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
-              onClick: toggle,
+              onClick: toggle
             })}
           </Header>
           <Content
             className="site-layout-background"
-          >{/* 
-           <Table columns={columns} dataSource={data} /> */}
+          >
            <Datatable 
-            data={data}/* 
-            visible={visible} */
+            data={data}
             setVisible={setVisible}
             setAuto={setAuto}
             setActualizar={setActualizar}
